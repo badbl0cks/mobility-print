@@ -1,13 +1,10 @@
-version: '3'
-
 services:
   mobility-print:
-    image: mobility-print
-      #image: snorre0815/mobility-print:latest
-      #image: ghcr.io/snorre-k/mobility-print:latest
-    build: ./mobility-print/build/
+    image: ghcr.io/badbl0cks/mobility-print:latest
+    #image: mobility-print:latest
+    #build: ./mobility-print/build/
     container_name: mobility-print
-    restart: always
+    restart: unless-stopped
     volumes:
       - papercut:/home/papercut/pc-mobility-print/data
       - cups-conf:/etc/cups
@@ -15,12 +12,11 @@ services:
       - cups-cache:/var/cache/cups
       - /etc/timezone:/etc/timezone:ro
       - /etc/localtime:/etc/localtime:ro
-#      - /mnt/mob-pdf:/var/spool/cups-pdf/ANONYMOUS
-    ports:
-      - "9163:9163"
-      - "9164:9164"
-      - "631:631"
-#    network_mode: host
+    #ports:
+    #  - "9163:9163"
+    #  - "9164:9164"
+    #  - "631:631"
+    network_mode: host
 
 volumes:
   papercut:
@@ -42,5 +38,4 @@ volumes:
 #   + Add Printers - e.g. IPP (ipp://printer.fqdn:631/ipp/print) - Driver: Manufact. -> driverless cups filter
 # - Disable host network
 # - Restart container - docker-compose up -d
-## If you have configured the virtual CUPS PDF printer you can enable the volume mount of '/var/spool/cups-pdf/ANONYMOUS'
 
